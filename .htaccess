@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?arg=$1
+
+<Files *.php>
+	order allow,deny
+	deny from all
+</Files>
+
+<Files index.php>
+	order allow,deny
+	allow from all
+</Files>
+
+ErrorDocument 404 "<script>location = '/404';</script>"
+ErrorDocument 403 "<script>location = '/403';</script>"
+ErrorDocument 400 "wtf?"
