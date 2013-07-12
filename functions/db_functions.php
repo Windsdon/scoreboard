@@ -8,8 +8,9 @@ class Database {
 	private $link = false;
 	private $success = false;
 	public static $default;
+	public $queryCount = 0;
 	public function __construct() {
-		$this->default = $this;
+		self::$default = $this;
 	}
 	public function connect() {
 		$newlink = mysql_connect ( Database::$db_host, Database::$db_user, Database::$db_pass );
@@ -56,22 +57,26 @@ class Database {
 	 */
 	public function query($q) {
 		if ($this->success) {
-			return mysql_query ( $q, $this->link );
+			$this->queryCount++;
+			return new QueryResult($q, $this);
 		} else {
+			throw new Exception("Not connected!");
 			return null;
 		}
 	}
 	public function queryResource($q) {
 		if ($this->success) {
+			$this->queryCount++;
 			return mysql_query ( $q, $this->link );
 		} else {
+			throw new Exception("Not connected!");
 			return false;
 		}
 	}
-	public static function makeObject(resource $resource) {
+	public static function makeObject($resource) {
 		return mysql_fetch_object ( $resource );
 	}
-	public static function count(resource $resource) {
+	public static function count($resource) {
 		return mysql_num_rows ( $resource );
 	}
 }
@@ -90,7 +95,7 @@ class QueryResult {
 		$this->db = $db;
 		$this->res = $db->queryResource ( $q );
 		
-		if ($link) {
+		if ($this->res) {
 			$this->success = true;
 		}
 	}

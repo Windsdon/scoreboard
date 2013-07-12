@@ -3,7 +3,10 @@ include_once 'index.gen.php';
 include_once 'base64.gen.php';
 include_once 'errorpage.gen.php';
 include_once 'user.class.php';
+include_once 'user.gen.php';
 include_once 'helpers.php';
+include_once 'permission.class.php';
+include_once 'db_functions.php';
 
 /**
  * This file contains the brain of the site.
@@ -96,6 +99,8 @@ class ScoreboardSystem {
 		$redirect = false;
 		$redirectPage = "";
 		$page = false;
+		$database = new Database();
+		$database->connect();
 		
 		if (isset ( $_GET ['arg'] )) {
 			// remove all dangerous stuff and separate the args
@@ -184,9 +189,12 @@ class ScoreboardSystem {
 			case self::PAGE_REDIRECT :
 				break;
 			case self::PAGE_USER:
-				
+				$this->generator = new UserPage($this);
+				break;
 			default :
 				var_dump ( $_GET );
+				var_dump ( $argSeq );
+				var_dump ( $page );
 				die ();
 		}
 		

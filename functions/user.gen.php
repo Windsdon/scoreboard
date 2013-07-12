@@ -20,6 +20,27 @@ class UserPage implements PageGenerator {
 	 * @return boolean True if has to echo
 	 */
 	public function generate(array $args) {
+		if(count($args) > 1 && $args[0] == "id"){
+			//echo "Trying to list by ID";
+			//var_dump($args);
+			
+			$user = User::getFromID($args[1]);
+			if(!$user){
+				$this->system->responseAppendLine("User not found!");
+			}else{
+				$this->system->responseAppendLine("Listing user by ID: {$user->getID()}");
+			}
+		}else{
+			//echo "Trying to list by USERNAME";
+			//var_dump($args);
+			
+			$user = User::getFromUsername($args[0]);
+			if(!$user){
+				$this->system->responseAppendLine("User not found!");
+			}else{
+				$this->system->responseAppendLine("Listing user by Username: {$user->getUsername()}");
+			}
+		}
 		return true;
 	}
 }
