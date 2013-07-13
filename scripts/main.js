@@ -1,6 +1,6 @@
 var definitions = {
 	wheelScrollAmount : 0.5
-}
+};
 
 function searchSubmit(){
 	alert("Hahahaha");
@@ -36,7 +36,7 @@ $(document).ready(function(e) {
 				return;
 			}
 		}
-	}
+	};
 	
 	$("#leftBarScroller").draggable({ distance: 10, axis: "y", stop: function(e, obj){
 		if(obj.helper.has(":animated")){
@@ -55,8 +55,11 @@ $(document).ready(function(e) {
 		if(parseInt(obj.helper.css("margin-top")) + obj.position.top + parseInt(obj.helper.height()) < parseInt($("#leftBarHolder").height())){
 			obj.helper.css("margin-top", "+=" + obj.position.top + "px");
 			obj.helper.css("top", 0);
-			obj.helper.animate({marginTop: -parseInt(obj.helper.height()) + parseInt($("#leftBarHolder").height()) + "px"}, 'fast');
-			console.log("stopping");
+			if(parseInt(obj.helper.height()) < parseInt($("#leftBarHolder").height())){
+				obj.helper.animate({marginTop: 0}, 'fast');
+			}else{
+				obj.helper.animate({marginTop: -parseInt(obj.helper.height()) + parseInt($("#leftBarHolder").height()) + "px"}, 'fast');
+			}
 			return false;
 		}
 	}});
@@ -77,4 +80,9 @@ $(document).ready(function(e) {
 	});
 	$("#leftBarSearchForm").submit(searchSubmit);
 	$(".leftBarSearchButton").click(searchSubmit);
+	
+	//fixing the side scrollers on the sidebar
+	$(".sidebarLeftScrollerBox").each(function(index, element) {
+        $(element).css("left", index * (parseInt($("#leftBarSideScroll").width())));
+    });
 });
