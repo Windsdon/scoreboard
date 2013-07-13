@@ -57,7 +57,7 @@ class Database {
 	 */
 	public function query($q) {
 		if ($this->success) {
-			$this->queryCount++;
+			//$this->queryCount++;
 			return new QueryResult($q, $this);
 		} else {
 			throw new Exception("Not connected!");

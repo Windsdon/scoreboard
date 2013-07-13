@@ -218,6 +218,8 @@ class ScoreboardSystem {
 		if (isset ( $this->generator )) {
 			if ($this->generator->generate ( $functionArgs )) {
 				echo $this->response;
+				$cq = Database::$default->queryCount;
+				echo "Completed with $cq MySQL queries";
 			}
 		} else {
 			echo "No generator";
