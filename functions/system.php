@@ -69,7 +69,7 @@ class ScoreboardSystem {
 			),
 			array (
 					"user",
-					1,
+					0,
 					2,
 					true 
 			) 
@@ -86,6 +86,12 @@ class ScoreboardSystem {
 	private $generator = NULL;
 	
 	/**
+	 *
+	 * @var User The user object of the current user, or false if not logged in.
+	 */
+	public $user = false;
+	
+	/**
 	 * Create the system and prepare response
 	 */
 	function __construct() {
@@ -99,8 +105,9 @@ class ScoreboardSystem {
 		$redirect = false;
 		$redirectPage = "";
 		$page = false;
-		$database = new Database();
-		$database->connect();
+		$database = new Database ();
+		$database->connect ();
+		
 		
 		if (isset ( $_GET ['arg'] )) {
 			// remove all dangerous stuff and separate the args
@@ -161,6 +168,9 @@ class ScoreboardSystem {
 			$page = self::PAGE_INDEX;
 		}
 		
+		// now, let's try to login the user
+		$this->user = User::getFromSession();
+		
 		switch ($page) {
 			case self::PAGE_INDEX :
 				$this->generator = new IndexPage ( $this );
@@ -188,8 +198,8 @@ class ScoreboardSystem {
 				die ();
 			case self::PAGE_REDIRECT :
 				break;
-			case self::PAGE_USER:
-				$this->generator = new UserPage($this);
+			case self::PAGE_USER :
+				$this->generator = new UserPage ( $this );
 				break;
 			default :
 				var_dump ( $_GET );

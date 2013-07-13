@@ -30,7 +30,7 @@ class UserPage implements PageGenerator {
 			}else{
 				$this->system->responseAppendLine("Listing user by ID: {$user->getID()}");
 			}
-		}else{
+		}else if(count($args) > 0){
 			//echo "Trying to list by USERNAME";
 			//var_dump($args);
 			
@@ -38,7 +38,19 @@ class UserPage implements PageGenerator {
 			if(!$user){
 				$this->system->responseAppendLine("User not found!");
 			}else{
-				$this->system->responseAppendLine("Listing user by Username: {$user->getUsername()}");
+				if(!$user){
+					$this->system->responseAppendLine("No such user");
+				}else{
+					//var_dump($user);
+					$this->system->responseAppendLine("Listing user by Username: {$user->getUsername()}");
+				}
+			}
+		}else{
+			$user = $this->system->user;
+			if(!!$user){
+				$this->system->responseAppendLine("Listing yourself: {$user->getUsername()}");
+			}else{
+				$this->system->responseAppendLine("You are not logged in!");
 			}
 		}
 		return true;
