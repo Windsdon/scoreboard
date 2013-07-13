@@ -8,16 +8,44 @@
 <script type="text/javascript" src="scripts/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
+<style>
+/*this part should be dynamically loaded by the server and/or ajax*/
+
+.user-class-admin-name {
+	color: #F00;
+}
+.user-windsdon-name {
+	color: #F00;
+}
+</style>
 </head>
 
 <body>
 <div id="leftBarHolder">
+  <div id="leftBarShadow"></div>
   <div id="leftBarScroller">
     <div id="leftBarHeader"> <a href="/" class="keep">
       <div id="headerLogo"></div>
       </a>
+      <div id="headerPicture" style="background-image:url(sytle/resources/lelouch_avatar.png)"><a href="/user" class="keep">
+        <div class="imageFog"></div>
+        </a> </div>
+      <div id="headerUsername"><a class="usernameColored user-windsdon-name keep" href="/user">[A] Windsdon</a></div>
+      <div id="headerNavigation">
+        <div class="headerNavigationItem"><a href="/user" class="keep">Perfil</a></div>
+        <div class="headerNavigationItem"><a href="#list" class="keep">Minhas Scoreboards</a></div>
+        <div class="headerNavigationItem"><a href="/preferences" class="keep">Preferências</a></div>
+        <div class="headerNavigationItem iconLeft"><a href="/panel" class="keep">Administração</a></div>
+      </div>
+      <div id="headerSearchBar">
+        <div id="leftBarSearchText">busca</div>
+        <form id="leftBarSearchForm">
+        <input type="text" id="leftBarSearch" />
+        </form>
+        <a href="#" class="leftBarSearchButton"></a>
+      </div>
     </div>
-    
+    <div style="height:2000px"></div>
   </div>
 </div>
 </body>

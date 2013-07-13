@@ -1,6 +1,12 @@
 var definitions = {
 	wheelScrollAmount : 0.5
 }
+
+function searchSubmit(){
+	alert("Hahahaha");
+	return false;
+}
+
 $(document).ready(function(e) {
     $("a.keep").click(function(e) {
 		var loc = $(this).attr("href");
@@ -33,6 +39,9 @@ $(document).ready(function(e) {
 	}
 	
 	$("#leftBarScroller").draggable({ distance: 10, axis: "y", stop: function(e, obj){
+		if(obj.helper.has(":animated")){
+			return;
+		}
 		obj.helper.css("margin-top", "+=" + obj.position.top + "px");
 		obj.helper.css("top", 0);
 	}, drag: function(e, obj){
@@ -51,4 +60,21 @@ $(document).ready(function(e) {
 			return false;
 		}
 	}});
+	
+	$("#leftBarSearch").focus(function(e) {
+        if(!$("#leftBarSearchText").hasClass("hidden")){
+			$("#leftBarSearchText").addClass("hidden");
+		}
+    }).blur(function(e) {
+        if(!$(this).val()){
+			$("#leftBarSearchText").removeClass("hidden");
+		}
+    });
+	
+	$("#leftBarSearch").autocomplete({
+		source: ["Default", "Destination", "General"],
+		appendTo: "#leftBarScroller"
+	});
+	$("#leftBarSearchForm").submit(searchSubmit);
+	$(".leftBarSearchButton").click(searchSubmit);
 });
